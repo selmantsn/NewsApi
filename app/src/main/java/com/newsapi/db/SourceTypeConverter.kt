@@ -1,7 +1,7 @@
 package com.newsapi.db
 
 import androidx.room.TypeConverter
-import com.newsapi.api.Source
+import com.newsapi.model.response.Source
 
 class SourceTypeConverter {
 

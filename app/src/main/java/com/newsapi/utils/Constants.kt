@@ -1,4 +1,4 @@
-package com.newsapi
+package com.newsapi.utils
 
 
 const val PAGE_SIZE = 20

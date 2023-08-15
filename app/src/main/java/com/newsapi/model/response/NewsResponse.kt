@@ -1,4 +1,4 @@
-package com.newsapi.api
+package com.newsapi.model.response
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -3,18 +3,19 @@ package com.newsapi.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.newsapi.BuildConfig
-import com.newsapi.PAGE_SIZE
-import com.newsapi.Q
-import com.newsapi.SORT_BY
-import com.newsapi.api.Articles
-import com.newsapi.api.ServiceInterface
 import com.newsapi.db.ArticlesDao
+import com.newsapi.model.request.NewsRequest
+import com.newsapi.model.response.Articles
+import com.newsapi.usecase.NewsUseCase
+import com.newsapi.utils.PAGE_SIZE
+import com.newsapi.utils.Q
+import com.newsapi.utils.SORT_BY
 import retrofit2.HttpException
 import java.io.IOException
 
 class NewsPagingSource(
-    private val serviceInterface: ServiceInterface,
     private val articlesDao: ArticlesDao,
+    private val newsUseCase: NewsUseCase,
     private val from: String,
     private val to: String
 ) : PagingSource<Int, Articles>() {
@@ -33,7 +34,7 @@ class NewsPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Articles> {
         return try {
             val pageIndex = params.key ?: PAGE_INDEX
-            val response = serviceInterface.getNews(
+            val response = newsUseCase.getNews(NewsRequest(
                 apiKey = BuildConfig.API_KEY,
                 q = Q,
                 sortBy = SORT_BY,
@@ -41,7 +42,8 @@ class NewsPagingSource(
                 pageSize = PAGE_SIZE,
                 from = from,
                 to = to
-            )
+
+            ))
 
             response.body()?.articles?.let {
                 articlesDao.insertAll(it)

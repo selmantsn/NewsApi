@@ -1,16 +1,16 @@
-package com.newsapi.paging
+package com.newsapi.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.newsapi.DateFormat
-import com.newsapi.api.Articles
+import com.newsapi.utils.DateFormat
+import com.newsapi.model.response.Articles
 import com.newsapi.databinding.NewsAdapterItemBinding
-import com.newsapi.loadImage
-import com.newsapi.toDate
-import com.newsapi.toString
+import com.newsapi.utils.loadImage
+import com.newsapi.utils.toDate
+import com.newsapi.utils.toString
 import javax.inject.Inject
 
 class NewsPagingAdapter @Inject constructor() :

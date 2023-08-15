@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.newsapi.api.Articles
+import com.newsapi.model.response.Articles
 
 @Dao
 interface ArticlesDao {

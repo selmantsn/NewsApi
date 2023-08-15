@@ -1,4 +1,4 @@
-package com.newsapi
+package com.newsapi.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -9,10 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import com.newsapi.R
 import com.newsapi.databinding.ActivityMainBinding
 import com.newsapi.paging.ItemLoadStateAdapter
-import com.newsapi.paging.NewsPagingAdapter
+import com.newsapi.utils.getTenDaysAgo
+import com.newsapi.utils.showDatePicker
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -62,14 +65,18 @@ class MainActivity : AppCompatActivity() {
 
         newsPagingAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Error) {
-                Toast.makeText(this@MainActivity, (loadState.refresh as LoadState.Error).error.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@MainActivity,
+                    (loadState.refresh as LoadState.Error).error.message,
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
         }
     }
 
     private fun collectUiState() {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.Main) {
             viewModel.getNews(selectedDate, selectedDate).collectLatest {
                 newsPagingAdapter.submitData(it)
             }
@@ -78,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun updateUiState() {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.Main) {
             viewModel.updateDateAndFetchData(selectedDate, selectedDate).collectLatest {
                 newsPagingAdapter.submitData(it)
                 binding.rvNews.scrollToPosition(0)

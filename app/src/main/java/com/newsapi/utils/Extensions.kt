@@ -1,4 +1,4 @@
-package com.newsapi
+package com.newsapi.utils
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.newsapi.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
